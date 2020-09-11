@@ -20,12 +20,6 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test:
-	docker run -it --rm -v "$(PWD)":/test ecen493r_lab_tester -v
-
-test-verbose:
-	docker run -it --rm -v "$(PWD)":/test ecen493r_lab_tester -vs
-
 clean:
 	$(RM) $(OBJECTS)
 	$(RM) $(BINDIR)/$(TARGET)
