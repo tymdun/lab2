@@ -41,14 +41,16 @@ Config tcp_client_parse_arguments(int argc, char *argv[]);
 int tcp_client_connect(Config config);
 
 // Using the the action and message provided by the command line, format the
-// data to follow the protocol and send it to the server.
-void tcp_client_send_message(int sockfd, char *action, char *message);
+// data to follow the protocol and send it to the server. Return 1 (EXIT_FAILURE) if an error
+// occurs, otherwise return 0 (EXIT_SUCCESS).
+int tcp_client_send_request(int sockfd, char *action, char *message);
 
 // Receive the response from the server. The caller must provide a function
 // pointer that handles the response. After the response is handled by the
 // handle_response function pointer, the response data can be safely deleted.
-// Must be null terminated
-void tcp_client_receive_response(int sockfd, int (*handle_response)(char *));
+// The string passed to the function pointer must be null terminated. Return 1 (EXIT_FAILURE) if an
+// error occurs, otherwise return 0 (EXIT_SUCCESS).
+int tcp_client_receive_response(int sockfd, int (*handle_response)(char *));
 
 // Close the socket when your program is done running.
 void tcp_client_close(int sockfd);
