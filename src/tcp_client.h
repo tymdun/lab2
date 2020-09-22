@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 #define TCP_CLIENT_BAD_SOCKET -1
-#define TCP_CLIENT_DEFAULT_PORT "8080"
+#define TCP_CLIENT_DEFAULT_PORT "8081"
 #define TCP_CLIENT_DEFAULT_HOST "localhost"
 
 // Contains all of the information needed to create to connect to the server and send it a message.
