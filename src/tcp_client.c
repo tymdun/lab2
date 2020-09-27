@@ -114,31 +114,43 @@ FILE *tcp_client_open_file(char *file_name)
 // action string and the message must point to the message string.
 int tcp_client_get_line(FILE *fd, char **action, char **message)
 {
-    size_t messageArraySize = (sizeof(message) / sizeof(char**));
+    size_t messageArraySize = (sizeof(*message) / sizeof(char));
     size_t currentCharCount = 0; 
     int32_t *allocateSuccess; 
-    fscanf(fd, "%s", *action); 
+    printf("%ld, %ld, did we make it\n", messageArraySize, currentCharCount);
+    fscanf(fd, "%s", *action);
+    //strncpy(*action, fd, sizeof(*action)); 
     log_trace("Action to be performed: %s", *action); 
     while(true)
     {
-        if (messageArraySize >= currentCharCount)
+        printf("here\n");
+        if (messageArraySize <= currentCharCount)
         {
-            allocateSuccess = realloc(message, (messageArraySize * 2));
+            printf("entered\n");
+            printf("current memory size %ld\n", messageArraySize);
+            allocateSuccess = realloc(*message, (messageArraySize * 2));
             if(allocateSuccess == NULL)
             {
                 log_debug("Failure to reallocate successfully");
+                exit(EXIT_FAILURE);
             }
-            messageArraySize = (sizeof(message) / sizeof(char**));
+            messageArraySize = (sizeof(*message) / sizeof(char));
+            printf("current memory size %ld\n", messageArraySize);
         }
+        printf("now\n");
         *message[currentCharCount] = fgetc(fd);
+        printf("oof\n");
         if(*message[currentCharCount] == '\n')
         {
-            currentCharCount++; 
+            currentCharCount++;
+            printf("biiger oof\n"); 
             log_trace("Message to send: %s", *message);
             printf("Message to send: %s", *message);
             return 1; 
         }
         currentCharCount++;
+        printf("current char count %ld\n", currentCharCount);
+        printf("current memory size %ld\n", messageArraySize);
     }
 }
 
