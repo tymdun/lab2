@@ -139,8 +139,8 @@ int tcp_client_get_line(FILE *fd, char **action, char **message)
             printf("current memory size %ld\n", messageArraySize);
         }
         printf("now\n");
-        *message[currentCharCount] = fgetc(fd);
-        //fscanf(fd, "%s", message[currentCharCount]);
+        //*message[currentCharCount] = fgetc(fd);
+        fscanf(fd, "%s", message[currentCharCount]);
         printf("V: %c", *message[currentCharCount]);
         if(*message[currentCharCount] == '\n')
         {
